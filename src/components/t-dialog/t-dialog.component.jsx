@@ -2,6 +2,8 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectAction from './select-action.component.jsx';
+import SelectResource from './select-resource.component.jsx';
 
 /**
  * A modal dialog can only be closed by selecting one of the actions.
@@ -44,6 +46,8 @@ export default class TDialog extends React.Component {
           open={this.state.open}
         >
           Only actions can close this dialog.
+          <SelectAction />
+          <SelectResource />
         </Dialog>
       </div>
     );
