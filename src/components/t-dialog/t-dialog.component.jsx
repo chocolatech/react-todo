@@ -7,9 +7,7 @@ import SelectResource from './select-resource.component.jsx';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 
-/**
- * A modal dialog can only be closed by selecting one of the actions.
- */
+let myStorage = window.localStorage;
 export default class TDialog extends React.Component {
     constructor() {
         super();
@@ -24,6 +22,13 @@ export default class TDialog extends React.Component {
         };
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+
+    submitForm = ()=>{
+        console.log(this.state);
+        myStorage.setItem('myState', JSON.stringify(this.state));
+
+        this.handleClose();
+    };
 
     handleInputChange(event) {
         console.log(event);
@@ -71,8 +76,7 @@ export default class TDialog extends React.Component {
             <FlatButton
                 label="Submit"
                 primary={true}
-                disabled={true}
-                onTouchTap={this.handleClose}
+                onTouchTap={this.submitForm}
             />,
         ];
 
