@@ -26,6 +26,7 @@ export default class TDialog extends React.Component {
     }
 
     handleInputChange(event) {
+        console.log(event);
         const target = event.target;
         const value = target.type === target.value;
         const name = target.name;
@@ -35,6 +36,23 @@ export default class TDialog extends React.Component {
         });
     }
 
+    handleStartDate = (e, date) => {
+        this.setState({
+            startDate: date,
+        });
+    }
+
+    handleEndtDate = (e, date) => {
+        this.setState({
+            endDate: date,
+        });
+    }
+
+    handleComment = (e, s) => {
+        this.setState({
+            comment: s,
+        });
+    }
     handleOpen = () => {
         this.setState({ open: true });
     };
@@ -69,11 +87,11 @@ export default class TDialog extends React.Component {
                 >
                     Only actions can close this dialog.
           <form action="">
-                        <SelectAction name="selectAction" onChange={this.handleInputChange} value={this.state.selectAction}/>
-                        <SelectResource name="selectResource" onChange={this.handleInputChange} value={this.state.selectResource}/>
-                        <DatePicker hintText="Start Date" name="startDate" onChange={this.handleInputChange} value={this.state.startDate}/>
-                        <DatePicker hintText="End Date" name="endDate" onChange={this.handleInputChange} value={this.state.endDate}/>
-                        <TextField floatingLabelText="Comment" name="comment" onChange={this.handleInputChange} value={this.state.comment}/>
+                        <SelectAction name="selectAction" onChange={this.handleInputChange} value={this.state.selectAction} />
+                        <SelectResource name="selectResource" onChange={this.handleInputChange} value={this.state.selectResource} />
+                        <DatePicker hintText="Start Date" name="startDate" onChange={this.handleStartDate} value={this.state.startDate} />
+                        <DatePicker hintText="End Date" name="endDate" onChange={this.handleEndtDate} value={this.state.endDate} />
+                        <TextField floatingLabelText="Comment" name="comment" onChange={this.handleComment} value={this.state.comment} />
                     </form>
                 </Dialog>
             </div>
