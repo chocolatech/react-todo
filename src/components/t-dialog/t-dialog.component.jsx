@@ -11,50 +11,72 @@ import DatePicker from 'material-ui/DatePicker';
  * A modal dialog can only be closed by selecting one of the actions.
  */
 export default class TDialog extends React.Component {
-  state = {
-    open: false,
-  };
+    constructor() {
+        super();
 
-  handleOpen = () => {
-    this.setState({open: true});
-  };
+        this.state = {
+            open: false,
+            selectAction: '',
+            selectResource: '',
+            startDate: new Date(),
+            endDate: new Date(),
+            comment: '',
+        };
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === target.value;
+        const name = target.name;
 
-  render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        disabled={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
+        this.setState({
+            [name]: value
+        });
+    }
 
-    return (
-      <div>
-        <RaisedButton label="Modal Dialog" onTouchTap={this.handleOpen} />
-        <Dialog
-          title="Dialog With Actions"
-          actions={actions}
-          modal={true}
-          open={this.state.open}
-        >
-          Only actions can close this dialog.
-          <SelectAction />
-          <SelectResource />
-          <DatePicker hintText="Start Date" />
-          <DatePicker hintText="End Date" />
-          <TextField floatingLabelText="Comment" />
-        </Dialog>
-      </div>
-    );
-  }
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    render() {
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Submit"
+                primary={true}
+                disabled={true}
+                onTouchTap={this.handleClose}
+            />,
+        ];
+
+        return (
+            <div>
+                <RaisedButton label="Modal Dialog" onTouchTap={this.handleOpen} />
+                <Dialog
+                    title="Dialog With Actions"
+                    actions={actions}
+                    modal={true}
+                    open={this.state.open}
+                >
+                    Only actions can close this dialog.
+          <form action="">
+                        <SelectAction name="selectAction" onChange={this.handleInputChange} value={this.state.selectAction}/>
+                        <SelectResource name="selectResource" onChange={this.handleInputChange} value={this.state.selectResource}/>
+                        <DatePicker hintText="Start Date" name="startDate" onChange={this.handleInputChange} value={this.state.startDate}/>
+                        <DatePicker hintText="End Date" name="endDate" onChange={this.handleInputChange} value={this.state.endDate}/>
+                        <TextField floatingLabelText="Comment" name="comment" onChange={this.handleInputChange} value={this.state.comment}/>
+                    </form>
+                </Dialog>
+            </div>
+        );
+    }
 }
