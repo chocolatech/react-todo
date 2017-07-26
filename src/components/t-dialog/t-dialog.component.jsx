@@ -2,8 +2,7 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectAction from './select-action.component.jsx';
-import SelectResource from './select-resource.component.jsx';
+import SelectPriority from './select-priority.component.jsx';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 
@@ -14,38 +13,19 @@ export default class TDialog extends React.Component {
 
         this.state = {
             open: false,
-            selectAction: '',
-            selectResource: '',
-            startDate: new Date(),
+            selectPriority: 1,
             endDate: new Date(),
-            comment: '',
+            item: '',
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    submitForm = ()=>{
+    submitForm = () => {
         console.log(this.state);
         myStorage.setItem('myState', JSON.stringify(this.state));
-        //test
         this.handleClose();
     };
 
-    handleInputChange(event) {
-        console.log(event);
-        const target = event.target;
-        const value = target.type === target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
-
-    handleStartDate = (e, date) => {
-        this.setState({
-            startDate: date,
-        });
-    }
+    handleChange = (event, index, value) => this.setState({ selectPriority: value });
 
     handleEndtDate = (e, date) => {
         this.setState({
@@ -53,9 +33,9 @@ export default class TDialog extends React.Component {
         });
     }
 
-    handleComment = (e, s) => {
+    handleItem = (e, s) => {
         this.setState({
-            comment: s,
+            item: s,
         });
     }
     handleOpen = () => {
@@ -84,18 +64,15 @@ export default class TDialog extends React.Component {
             <div>
                 <RaisedButton label="Modal Dialog" onTouchTap={this.handleOpen} />
                 <Dialog
-                    title="Dialog With Actions"
+                    title="Add todo"
                     actions={actions}
                     modal={true}
                     open={this.state.open}
                 >
-                    Only actions can close this dialog.
-          <form action="">
-                        <SelectAction name="selectAction" onChange={this.handleInputChange} value={this.state.selectAction} />
-                        <SelectResource name="selectResource" onChange={this.handleInputChange} value={this.state.selectResource} />
-                        <DatePicker hintText="Start Date" name="startDate" onChange={this.handleStartDate} value={this.state.startDate} />
-                        <DatePicker hintText="End Date" name="endDate" onChange={this.handleEndtDate} value={this.state.endDate} />
-                        <TextField floatingLabelText="Comment" name="comment" onChange={this.handleComment} value={this.state.comment} />
+                    <form>
+                        <TextField floatingLabelText="To do" name="todo" onChange={this.handleItem} value={this.state.item} />
+                        <SelectPriority name="SelectPriority" onChange={this.handleChange} value={this.state.selectPriority} />
+                        <DatePicker floatingLabelText="End date" name="endDate" onChange={this.handleEndtDate} value={this.state.endDate} />
                     </form>
                 </Dialog>
             </div>
