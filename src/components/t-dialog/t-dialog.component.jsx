@@ -26,7 +26,7 @@ export default class TDialog extends React.Component {
     submitForm = ()=>{
         console.log(this.state);
         myStorage.setItem('myState', JSON.stringify(this.state));
-
+        //test
         this.handleClose();
     };
 
